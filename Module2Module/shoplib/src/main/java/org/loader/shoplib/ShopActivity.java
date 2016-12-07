@@ -7,12 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import org.loader.router.Router;
+import org.loader.annotation.StaticRouter;
 import org.loader.router.rule.ActivityRule;
 import org.loader.utilslib.Application;
 import org.loader.utilslib.Logger;
 import org.loader.utilslib.UseContext;
 
+@StaticRouter(ActivityRule.ACTIVITY_SCHEME + "shop.main")
 public class ShopActivity extends AppCompatActivity {
 
     @Override
@@ -29,7 +30,7 @@ public class ShopActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = Router.invoke(ShopActivity.this, ActivityRule.ACTIVITY_SCHEME + "bbs.main");
+                Intent it = org.loader.router.Router.invoke(ShopActivity.this, ActivityRule.ACTIVITY_SCHEME + "org.loader.bbslib.BBSActivity");
                 startActivity(it);
             }
         });

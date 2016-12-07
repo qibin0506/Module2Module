@@ -3,9 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Module2Module.iml" filepath="$PROJECT_DIR$/Module2Module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/annotation/annotation.iml" filepath="$PROJECT_DIR$/annotation/annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bbslib/bbslib.iml" filepath="$PROJECT_DIR$/bbslib/bbslib.iml" />
       <module fileurl="file://$PROJECT_DIR$/router/router.iml" filepath="$PROJECT_DIR$/router/router.iml" />
+      <module fileurl="file://$PROJECT_DIR$/routerhelper/routerhelper.iml" filepath="$PROJECT_DIR$/routerhelper/routerhelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/shoplib/shoplib.iml" filepath="$PROJECT_DIR$/shoplib/shoplib.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilslib/utilslib.iml" filepath="$PROJECT_DIR$/utilslib/utilslib.iml" />
     </modules>

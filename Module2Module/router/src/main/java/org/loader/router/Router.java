@@ -46,4 +46,13 @@ public class Router {
     public static <V> V invoke(Context ctx, String pattern) {
         return RouterInternal.get().invoke(ctx, pattern);
     }
+
+    /**
+     * 是否存在该路由
+     * @param pattern
+     * @return
+     */
+    public static boolean resolveRouter(String pattern) {
+        return RouterInternal.get().resolveRouter(pattern);
+    }
 }

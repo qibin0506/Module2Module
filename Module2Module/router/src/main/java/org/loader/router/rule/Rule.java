@@ -22,4 +22,11 @@ public interface Rule<T, V> {
      * @return {@code V} 返回对应的返回值
      */
     V invoke(Context ctx, String pattern);
+
+    /**
+     * 查看是否存在pattern对应的路由
+     * @param pattern
+     * @return
+     */
+    boolean resolveRule(String pattern);
 }

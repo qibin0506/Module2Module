@@ -105,12 +105,11 @@ public class RouterProcessor extends AbstractProcessor {
     }
 
     private void processComponent(RoundEnvironment roundEnvironment) throws Exception {
-        String componentName = "";
         Set<? extends Element> compElements = roundEnvironment.getElementsAnnotatedWith(Component.class);
         if (compElements.isEmpty()) { return;}
 
         Element item = compElements.iterator().next();
-        componentName = item.getAnnotation(Component.class).value();
+        String componentName = item.getAnnotation(Component.class).value();
 
         Set<? extends Element> routerElements = roundEnvironment.getElementsAnnotatedWith(StaticRouter.class);
         for (Element e : routerElements) {

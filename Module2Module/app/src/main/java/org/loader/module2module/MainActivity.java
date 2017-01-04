@@ -17,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void click(View view) {
-        Intent it = Router.invoke(this, ActivityRule.ACTIVITY_SCHEME + "shop.main");
-        startActivity(it);
+        if (Router.resolveRouter(ActivityRule.ACTIVITY_SCHEME + "shop.main")) {
+            Intent it = Router.invoke(this, ActivityRule.ACTIVITY_SCHEME + "shop.main");
+            startActivity(it);
+        }
     }
 }

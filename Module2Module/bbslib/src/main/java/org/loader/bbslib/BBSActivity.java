@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.loader.annotation.AutoRouter;
 import org.loader.annotation.StaticRouter;
@@ -32,8 +33,11 @@ public class BBSActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = Router.invoke(BBSActivity.this, ActivityRule.ACTIVITY_SCHEME + "shop.main");
-                startActivity(it);
+                Toast.makeText(BBSActivity.this, getResources().getString(R.string.click_notice), Toast.LENGTH_SHORT).show();
+                if (Router.resolveRouter(ActivityRule.ACTIVITY_SCHEME + "shop.main")) {
+                    Intent it = Router.invoke(BBSActivity.this, ActivityRule.ACTIVITY_SCHEME + "shop.main");
+                    startActivity(it);
+                }
             }
         });
     }

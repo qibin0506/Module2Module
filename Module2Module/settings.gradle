@@ -1,1 +1,1 @@
-include ':app', ':utilslib', ':router', ':shoplib', ':bbslib', ':routerhelper', ':annotation'
+include ':app', ':utilslib', ':router', ':shoplib', ':bbslib', ':routerhelper', ':annotation', ':reslib'

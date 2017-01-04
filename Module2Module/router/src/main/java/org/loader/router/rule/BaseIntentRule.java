@@ -36,6 +36,11 @@ public abstract class BaseIntentRule<T> implements Rule<T, Intent> {
         return new Intent(ctx, klass);
     }
 
+    @Override
+    public boolean resolveRule(String pattern) {
+        return mIntentRules.get(pattern) != null;
+    }
+
     /**
      * 当找不到路由规则时抛出异常
      * @param pattern 路由pattern

@@ -1,9 +1,26 @@
-apply plugin: 'com.android.library'
+def isDebug = debug.toBoolean()
+
+if (isDebug) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
+
+    sourceSets {
+        main {
+            if (isDebug) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
 
     defaultConfig {
         minSdkVersion 14
@@ -29,9 +46,17 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
-    compile project(':utilslib')
+
+    // router begin
     compile project(':router')
     compile project(':annotation')
     compile project(':routerhelper')
     apt project(':routerhelper')
+    // router end
+
+    // util begin
+    compile project(':utilslib')
+    compile project(':reslib')
+    // util end
+
 }

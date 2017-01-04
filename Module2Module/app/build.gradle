@@ -1,11 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
-// 如果是debug模板， 则不加载bbs模块
-// 但是会出现一个问题， 路由注册的地方会报错～
-// 因为找不到那个class了～～～
-def isDebugMode = false
-
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -33,12 +28,21 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
+    // router begin
     compile project(':routerhelper')
-    apt project(':routerhelper')
     compile project(':router')
-    compile project(':shoplib')
+    apt project(':routerhelper')
+    // router end
+
+    // util begin
     compile project(':utilslib')
-    if (!isDebugMode) {
+    compile project(':reslib')
+    // util end
+
+    // lib begin
+    if (!debug.toBoolean()) {
+        compile project(':shoplib')
         compile project(':bbslib')
     }
+    // lib end
 }

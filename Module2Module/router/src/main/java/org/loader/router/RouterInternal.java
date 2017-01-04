@@ -103,4 +103,14 @@ public class RouterInternal {
 
         return rule.invoke(ctx, pattern);
     }
+
+    /**
+     * 是否存在该路由
+     * @param pattern
+     * @return
+     */
+    final boolean resolveRouter(String pattern) {
+        Rule<?, ?> rule = getRule(pattern);
+        return rule != null && rule.resolveRule(pattern);
+    }
 }

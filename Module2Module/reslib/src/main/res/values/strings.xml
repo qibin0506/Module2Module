@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ResLib</string>
+    <string name="click_notice">clicked!</string>
+</resources>

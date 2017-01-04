@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.loader.annotation.StaticRouter;
+import org.loader.router.Router;
 import org.loader.router.rule.ActivityRule;
 import org.loader.utilslib.Application;
 import org.loader.utilslib.Logger;
@@ -30,8 +32,11 @@ public class ShopActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = org.loader.router.Router.invoke(ShopActivity.this, ActivityRule.ACTIVITY_SCHEME + "org.loader.bbslib.BBSActivity");
-                startActivity(it);
+                Toast.makeText(ShopActivity.this, getResources().getString(R.string.click_notice), Toast.LENGTH_SHORT).show();
+                if (Router.resolveRouter(ActivityRule.ACTIVITY_SCHEME + "org.loader.bbslib.BBSActivity")) {
+                    Intent it = org.loader.router.Router.invoke(ShopActivity.this, ActivityRule.ACTIVITY_SCHEME + "org.loader.bbslib.BBSActivity");
+                    startActivity(it);
+                }
             }
         });
     }

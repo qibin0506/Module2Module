@@ -3,12 +3,12 @@ package org.loader.router.helper;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class RouterRegister {
+public class RouterHelper {
 
-    public static void register() {
+    public static void install() {
         try {
-            Class<?> klass = Class.forName("org.loader.router.RouterInstaller");
-            Method method = klass.getDeclaredMethod("install");
+            Class<?> klass = Class.forName(Config.PACKAGE_NAME + "." + Config.ROUTER_MANAGER);
+            Method method = klass.getDeclaredMethod(Config.ROUTER_MANAGER_METHOD);
             method.invoke(null);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

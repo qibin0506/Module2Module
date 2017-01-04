@@ -31,15 +31,11 @@ import javax.tools.JavaFileObject;
 @AutoService(Processor.class)
 public class RouterProcessor extends AbstractProcessor {
 
-    public static final String PACKAGE_NAME = "org.loader.router";
-    public static final String FILE_PREFIX = "Router_";
-    public static final String ROUTER_INSTALLER = "RouterInstaller";
-
     private Filer mFiler;
     private Messager mMessager;
 
-    private Map<String, String> mMap = new HashMap<>();
-    private List<String> mList = new ArrayList<>();
+    private Map<String, String> mStaticRouterMap = new HashMap<>();
+    private List<String> mAutoRouterList = new ArrayList<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -65,8 +61,8 @@ public class RouterProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        mMap.clear();
-        mList.clear();
+        mStaticRouterMap.clear();
+        mAutoRouterList.clear();
 
         try {
             Set<? extends Element> mainAppElement = roundEnvironment.getElementsAnnotatedWith(Components.class);
@@ -84,17 +80,17 @@ public class RouterProcessor extends AbstractProcessor {
 
     private void processInstaller(Set<? extends Element> mainAppElement) throws IOException {
         TypeElement typeElement = (TypeElement) mainAppElement.iterator().next();
-        JavaFileObject javaFileObject = mFiler.createSourceFile(ROUTER_INSTALLER, typeElement);
+        JavaFileObject javaFileObject = mFiler.createSourceFile(Config.ROUTER_MANAGER, typeElement);
         PrintWriter writer = new PrintWriter(javaFileObject.openWriter());
 
-        writer.println("package " + PACKAGE_NAME + ";");
-        writer.println("public class " + ROUTER_INSTALLER + " {");
-        writer.println("public static void install() {");
+        writer.println("package " + Config.PACKAGE_NAME + ";");
+        writer.println("public class " + Config.ROUTER_MANAGER + " {");
+        writer.println("public static void " + Config.ROUTER_MANAGER_METHOD + "() {");
 
         Components componentsAnnotation = typeElement.getAnnotation(Components.class);
         String[] components = componentsAnnotation.value();
         for (String item : components) {
-            writer.println(FILE_PREFIX + item + ".router();");
+            writer.println(Config.FILE_PREFIX + item + ".router();");
         }
 
         writer.println("}");
@@ -116,27 +112,27 @@ public class RouterProcessor extends AbstractProcessor {
             if (! (e instanceof TypeElement)) { continue;}
             TypeElement typeElement = (TypeElement) e;
             String pattern = typeElement.getAnnotation(StaticRouter.class).value();
-            mMap.put(pattern, typeElement.getQualifiedName().toString());
+            mStaticRouterMap.put(pattern, typeElement.getQualifiedName().toString());
         }
 
         Set<? extends Element> autoRouterElements = roundEnvironment.getElementsAnnotatedWith(AutoRouter.class);
         for (Element e : autoRouterElements) {
             if (!(e instanceof TypeElement)) { continue;}
             TypeElement typeElement = (TypeElement) e;
-            mList.add(typeElement.getQualifiedName().toString());
+            mAutoRouterList.add(typeElement.getQualifiedName().toString());
         }
 
         writeComponentFile(componentName);
     }
 
     private void writeComponentFile(String componentName) throws Exception {
-        String className = FILE_PREFIX + componentName;
+        String className = Config.FILE_PREFIX + componentName;
         JavaFileObject javaFileObject = mFiler.createSourceFile(className);
 //        javaFileObject.delete();
 
         PrintWriter printWriter = new PrintWriter(javaFileObject.openWriter());
 
-        printWriter.println("package " + PACKAGE_NAME + ";");
+        printWriter.println("package " + Config.PACKAGE_NAME + ";");
 
         printWriter.println("import android.app.Activity;");
         printWriter.println("import android.app.Service;");
@@ -146,12 +142,12 @@ public class RouterProcessor extends AbstractProcessor {
         printWriter.println("public static void router() {");
 
         // // Router.router(ActivityRule.ACTIVITY_SCHEME + "shop.main", ShopActivity.class);
-        for(Map.Entry<String, String> entry : mMap.entrySet()) {
+        for(Map.Entry<String, String> entry : mStaticRouterMap.entrySet()) {
             printWriter.println("org.loader.router.Router.router(\"" + entry.getKey()
                     +"\", "+entry.getValue()+".class);");
         }
 
-        for (String klass : mList) {
+        for (String klass : mAutoRouterList) {
             printWriter.println("if (Activity.class.isAssignableFrom(" + klass + ".class)) {");
             printWriter.println("org.loader.router.Router.router(org.loader.router.rule.ActivityRule.ACTIVITY_SCHEME + \""
                     +klass+"\", " + klass + ".class);");

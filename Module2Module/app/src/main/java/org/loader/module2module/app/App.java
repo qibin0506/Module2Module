@@ -3,7 +3,7 @@ package org.loader.module2module.app;
 import android.support.multidex.MultiDexApplication;
 
 import org.loader.annotation.Components;
-import org.loader.router.helper.RouterRegister;
+import org.loader.router.helper.RouterHelper;
 import org.loader.utilslib.Logger;
 
 @Components({"shop", "bbs"})
@@ -17,8 +17,8 @@ public class App extends MultiDexApplication {
     }
 
     private void setupRouter() {
-        RouterRegister.register();
-//        AR.route();
+        RouterHelper.install();
+
 //        Router.router(ActivityRule.ACTIVITY_SCHEME + "shop.main", ShopActivity.class);
 //        Router.router(ActivityRule.ACTIVITY_SCHEME + "bbs.main", BBSActivity.class);
     }

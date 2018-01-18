@@ -20,6 +20,6 @@ public class App extends MultiDexApplication {
         RouterHelper.install();
 
 //        Router.router(ActivityRule.ACTIVITY_SCHEME + "shop.main", ShopActivity.class);
-//        Router.router(ActivityRule.ACTIVITY_SCHEME + "bbs.main", BBSActivity.class);
+//        Router.router(ActivityRule.ACTIVITY_SCHEME + "org.loader.bbslib.BBSActivity", BBSActivity.class);
     }
 }
